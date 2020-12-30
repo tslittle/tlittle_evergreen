@@ -62,12 +62,14 @@ export class CopiesComponent implements OnInit {
                     && copy.status_holdable === 't';
             }
         };
+        
+        
 
         this.cellTextGenerator = {
             callnumber: row => (`${row.call_number_prefix_label} ` +
                 `${row.call_number_label} ${row.call_number_suffix_label}`).trim(),
             holdable: row => this.copyContext.holdable(row),
-            barcode: row => row.barcode
+            barcode: row => row.barcode,
         };
 
         this.broadcaster.listen('eg.holdings.update').subscribe(data => {
@@ -107,7 +109,7 @@ export class CopiesComponent implements OnInit {
                     });
                 }
             });
-            copy.active_date = copy.active_date || copy.create_date;
+            copy.circ_lib;
             return copy;
         }));
     }

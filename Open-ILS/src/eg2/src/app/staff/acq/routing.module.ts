@@ -9,6 +9,10 @@ const routes: Routes = [
   { path: 'provider',
     loadChildren: () =>
       import('./provider/acq-provider.module').then(m => m.AcqProviderModule)
+  },
+  { path: 'picklist',
+    loadChildren: () =>
+      import('./picklist/acq-picklist.module').then(m => m.AcqPicklistModule)
   }
 ];
 

@@ -408,9 +408,9 @@
           </li>
           <li class="divider"></li>
           <li>
-            <a href="./acq/legacy/picklist/upload" target="_self">
+            <a href="/eg2/staff/acq/picklist/upload" target="_self">
               <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
-              [% l('Load MARC Order Records') %]
+              [% l('Acq Upload (NEW)') %]
             </a>
           </li>
           <li>
