@@ -19967,6 +19967,15 @@ VALUES (
     )
 );
 
+INSERT INTO config.workstation_setting_type (name, grp, datatype, label)
+VALUES (
+    'eg.acq.picklist.upload.templates', 'acq', 'object',
+    oils_i18n_gettext(
+        'eg.acq.picklist.upload.templates',
+        'Picklist Upload Form Templates',
+        'cwst', 'label'
+    )
+);
 
 INSERT into config.workstation_setting_type (name, grp, datatype, label)
 VALUES (
