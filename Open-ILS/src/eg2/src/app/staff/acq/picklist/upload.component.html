@@ -51,27 +51,6 @@
   <h2>Purchase Order</h2>
   <div class="row">
     <div class="col-lg-3">
-      <label for="create-po" i18n>Create Purchase Order</label>
-  </div>
-  <div class="col-lg-3">
-    <input class="form-check-input" type="checkbox" 
-      id="create-po"
-      [(ngModel)]="createPurchaseOrder">
-  </div>
-
-  <div class="col-lg-3">
-    <label for="activate-po" i18n>Activate Purchase Order</label>
-</div>
-
-<div class="col-lg-3">
-  <input class="form-check-input" type="checkbox" 
-    id="activate-po"
-    [(ngModel)]="activatePurchaseOrder">
-</div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-3">
       <label for="provider-select" i18n>Provider</label>
     </div>
   
@@ -84,16 +63,39 @@
         [startId]="selectedProvider">
       </eg-combobox>
     </div>
-  
+
+    <div class="col-lg-3">
+      <label for="create-po" i18n>Create Purchase Order</label>
+  </div>
+  <div class="col-lg-3">
+    <input class="form-check-input" type="checkbox" 
+      id="create-po"
+      [(ngModel)]="createPurchaseOrder">
+  </div>
+</div>
+  <div class="row">
     <div class="col-lg-3">
       <label for="type-select" i18n>Ordering Agency</label>
     </div>
       <div class="col-lg-3">
-        <eg-org-select
-          [initialOrg]="contextOrg"
-          (onChange)="orgOnChange($event)">
-        </eg-org-select>
+        <eg-org-family-select #orderingAgencySelector
+                (onChange)="orgOnChange($event,'orderingAgency')"
+                [initialOrg]="orderingAgency"
+                [hideAncestorSelector]="true"
+                [hideDescendantSelector]="true"
+                [placeholder]="'Library'">
+              </eg-org-family-select>
       </div>
+
+      <div class="col-lg-3">
+        <label for="activate-po" i18n>Activate Purchase Order</label>
+    </div>
+    
+    <div class="col-lg-3">
+      <input class="form-check-input" type="checkbox" 
+        id="activate-po"
+        [(ngModel)]="activatePurchaseOrder">
+    </div>
     </div>
 
   <div class="row">

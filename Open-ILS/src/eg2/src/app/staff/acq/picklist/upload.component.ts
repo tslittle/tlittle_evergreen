@@ -138,7 +138,6 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         private mergeProfileSelector: ComboboxComponent;
     @ViewChild('fallThruMergeProfileSelector', { static: true })
         private fallThruMergeProfileSelector: ComboboxComponent;
-
     @ViewChild('dupeQueueAlert', { static: true })
         private dupeQueueAlert: AlertDialogComponent;
 
@@ -160,7 +159,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectedBibSource = 1; // default to system local
         this.recordType = 'acq';
         this.formTemplates = {};
-        this.orderingAgency = {primaryOrgId: this.auth.user().ws_ou(), includeDescendants: true};
+        this.orderingAgency = this.org.get(this.auth.user().ws_ou());
 //To-do add default for fiscal year
         if (this.vlagent.importSelection) {
 
@@ -219,6 +218,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
         return Promise.all(promises);
     }
+
 
     loadTemplates() {
         this.store.getItem(TEMPLATE_SETTING_NAME).then(
@@ -334,7 +334,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
                 break;
         }
     }
-
+            
     fileSelected($event) {
        this.selectedFile = $event.target.files[0];
     }
