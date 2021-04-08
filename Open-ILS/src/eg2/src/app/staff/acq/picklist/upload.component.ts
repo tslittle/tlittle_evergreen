@@ -28,6 +28,7 @@ const TEMPLATE_ATTRS = [
     'activatePurchaseOrder',
     'orderingAgency',
     'selectedFiscalYear',
+    'loadItems',
     'selectedBibSource',
     'selectedMatchSet',
     'mergeOnExact',
@@ -53,6 +54,7 @@ interface ImportOptions {
     activate_po?: boolean;
     ordering_agency?: OrgFamily;
     fiscal_year?: any;
+    selectionLists?: any;
     exit_early: boolean;
 }
 
@@ -71,11 +73,11 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
     activeQueueId: number;
     orderingAgency: OrgFamily;
     selectedFiscalYear: number;
+    selectedSelectionList: number;
     selectedBibSource: number;
     selectedProvider: number;
     selectedMatchSet: number;
     importDefId: number;
-    selectedHoldingsProfile: number;
     selectedMergeProfile: number;
     selectedFallThruMergeProfile: number;
     selectedFile: File;
@@ -126,12 +128,12 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         private bibSourceSelector: ComboboxComponent;
     @ViewChild('providerSelector', {static: true})
         private providerSelector: ComboboxComponent;
-        @ViewChild('fiscalYearSelector', { static: true })
+    @ViewChild('fiscalYearSelector', { static: true })
         private fiscalYearSelector: ComboboxComponent;
+    @ViewChild('selectionListSelector', { static: true })
+        private selectionListSelector: ComboboxComponent;    
     @ViewChild('matchSetSelector', { static: true })
         private matchSetSelector: ComboboxComponent;
-    @ViewChild('holdingsProfileSelector', { static: true })
-        private holdingsProfileSelector: ComboboxComponent;
     @ViewChild('mergeProfileSelector', { static: true })
         private mergeProfileSelector: ComboboxComponent;
     @ViewChild('fallThruMergeProfileSelector', { static: true })
@@ -208,6 +210,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
             this.vlagent.getBibSources(),
             this.vlagent.getFiscalYears(),
             this.vlagent.getProvidersList(),
+            this.vlagent.getSelectionLists(),
             this.vlagent.getItemImportDefs(),
             this.org.settings(['vandelay.default_match_set']).then(
                 s => this.defaultMatchSet = s['vandelay.default_match_set']),
@@ -265,6 +268,10 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
                        });
                 break;
 
+            case 'selectionLists':
+                 list = this.vlagent.selectionLists;
+                 break;
+
             case 'activeQueues':
                 list = (this.vlagent.allQueues[rtype] || [])
                         .filter(q => q.complete() === 'f');
@@ -309,13 +316,14 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.selectedFiscalYear = id;
                 break;
 
+            case 'selectionLists':
+                this.selectedSelectionList = id;
+                break;
+
             case 'matchSets':
                 this.selectedMatchSet = id;
                 break;
 
-            case 'importItemDefs':
-                this.selectedHoldingsProfile = id;
-                break;
 
             case 'mergeProfiles':
                 this.selectedMergeProfile = id;
@@ -403,7 +411,6 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.selectedQueue.label,
                 this.recordType,
                 this.importDefId,
-                this.selectedHoldingsProfile,
                 this.selectedMatchSet,
             ).then(
                 id => id,
@@ -648,8 +655,6 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         this.matchSetSelector.applyEntryId(this.selectedMatchSet);
         this.providerSelector.applyEntryId(this.selectedProvider);
         this.fiscalYearSelector.applyEntryId(this.selectedFiscalYear);
-        this.holdingsProfileSelector
-            .applyEntryId(this.selectedHoldingsProfile);
         this.mergeProfileSelector.applyEntryId(this.selectedMergeProfile);
         this.fallThruMergeProfileSelector
             .applyEntryId(this.selectedFallThruMergeProfile);

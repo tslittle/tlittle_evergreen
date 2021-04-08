@@ -81,12 +81,12 @@
         [entries]="formatEntries('providersList')"
         (onChange)="selectEntry($event, 'providersList')"
         [required]="true"
-        [startId]="selectedProvider" placeholder="Provider..." i18n-placeholder>
+        [startId]="selectedProvider">
       </eg-combobox>
     </div>
   
     <div class="col-lg-3">
-      <label for="type-select" i18n>Context Org Unit</label>
+      <label for="type-select" i18n>Ordering Agency</label>
     </div>
       <div class="col-lg-3">
         <eg-org-select
@@ -120,6 +120,22 @@
       [(ngModel)]="loadItems">
   </div>
   </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+      <label for="sl-select" i18n>Add to Selection List?</label>
+    </div>
+    <div class="col-lg-3">
+      <eg-combobox #selectionListSelector
+        id="sl-select"
+        [startId]="selectedSelectionList"
+        [entries]="formatEntries('selectionLists')"
+        (onChange)="selectEntry($event, 'selectionLists')"
+        placeholder="Selection List...." i18n-placeholder>
+      </eg-combobox>
+    </div>
+  </div>
+
 
   <h2>Upload Settings</h2>
 
@@ -183,6 +199,7 @@
         [required]="true"
         [entries]="formatEntries('mergeProfiles')"
         (onChange)="selectEntry($event, 'mergeProfiles')"
+        [startId]="selectedMergeProfile"
         placeholder="Merge Profile..." i18n-placeholder>
       </eg-combobox>
     </div>
@@ -205,6 +222,7 @@
         id="insuff-merge-profiles"
         [entries]="formatEntries('mergeProfiles')"
         (onChange)="selectEntry($event, 'FallThruMergeProfile')"
+        [startId]="selectedFallThruMergeProfile"
         placeholder="Fall-Through Merge Profile..." i18n-placeholder>
       </eg-combobox>
     </div>

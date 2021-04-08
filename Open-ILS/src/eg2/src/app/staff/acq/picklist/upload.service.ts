@@ -25,6 +25,7 @@ export class PicklistUploadService {
     mergeProfiles: IdlObject[];
     providersList: IdlObject[];
     fiscalYears: IdlObject[];
+    selectionLists: IdlObject[];
 
     // Used for tracking records between the queue page and
     // the import page.  Fields managed externally.
@@ -92,6 +93,20 @@ export class PicklistUploadService {
         .toPromise().then(providers => {
             this.providersList = providers;
             return providers;
+        });
+    }
+
+    getSelectionLists(): Promise<IdlObject[]> {
+        if (this.selectionLists) {
+            return Promise.resolve(this.selectionLists);
+        }
+
+        const owners = this.org.ancestors(this.auth.user().ws_ou(), true);
+        return this.pcrud.search('acqpl',
+            {owner: owners}, {order_by: {acqpl: ['name']}}, {atomic: true})
+        .toPromise().then(lists => {
+            this.selectionLists = lists;
+            return lists;
         });
     }
     // Returns a promise resolved with the list of queues.
@@ -184,8 +199,7 @@ export class PicklistUploadService {
         queueName: string,
         recordType: string,
         importDefId: number,
-        matchSet: number,
-        matchBucket: number): Promise<number> {
+        matchSet: number): Promise<number> {
 
         const method = `open-ils.vandelay.${recordType}_queue.create`;
 
