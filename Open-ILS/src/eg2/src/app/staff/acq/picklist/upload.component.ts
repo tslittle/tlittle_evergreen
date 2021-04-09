@@ -52,7 +52,7 @@ interface ImportOptions {
     match_quality_ratio: number;
     create_po?: boolean;
     activate_po?: boolean;
-    ordering_agency?: IdlObject;
+    ordering_agency?: number;
     fiscal_year?: any;
     selectionLists?: any;
     exit_early: boolean;
@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
     startQueueId: number;
 
     activeQueueId: number;
-    orderingAgency: IdlObject;
+    orderingAgency: number;
     selectedFiscalYear: number;
     selectedSelectionList: number;
     selectedBibSource: number;
@@ -159,7 +159,6 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectedBibSource = 1; // default to system local
         this.recordType = 'acq';
         this.formTemplates = {};
-        this.orderingAgency = this.org.get(this.auth.user().ws_ou());
 //To-do add default for fiscal year
         if (this.vlagent.importSelection) {
 
@@ -218,11 +217,15 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
         return Promise.all(promises);
     }
-
-    orgOnChange(org: IdlObject) {
+/**
+    orgOnChange(org: number) {
         this.orderingAgency = org;
     }
+*/
 
+    orgOnChange(org: IdlObject) {
+        this.orderingAgency = org.id()
+    }
 
     loadTemplates() {
         this.store.getItem(TEMPLATE_SETTING_NAME).then(
