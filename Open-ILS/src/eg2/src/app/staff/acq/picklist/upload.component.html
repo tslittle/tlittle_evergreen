@@ -78,13 +78,10 @@
       <label for="type-select" i18n>Ordering Agency</label>
     </div>
       <div class="col-lg-3">
-        <eg-org-family-select #orderingAgencySelector
-                (onChange)="orgOnChange($event,'orderingAgency')"
-                [initialOrg]="orderingAgency"
-                [hideAncestorSelector]="true"
-                [hideDescendantSelector]="true"
-                [placeholder]="'Library'">
-              </eg-org-family-select>
+        <eg-org-select
+        [initialOrg]="orderingAgency"
+        (onChange)="orgOnChange($event)">
+        </eg-org-select>
       </div>
 
       <div class="col-lg-3">

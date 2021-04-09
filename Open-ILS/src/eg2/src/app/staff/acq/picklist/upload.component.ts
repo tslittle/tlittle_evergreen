@@ -18,7 +18,7 @@ import {ProgressInlineComponent} from '@eg/share/dialog/progress-inline.componen
 import {AlertDialogComponent} from '@eg/share/dialog/alert.component';
 import {ServerStoreService} from '@eg/core/server-store.service';
 import {PicklistUploadService} from './upload.service';
-import {OrgFamily} from '@eg/share/org-family-select/org-family-select.component';
+import {OrgSelectComponent} from '@eg/share/org-select/org-select.component'
 
 
 const TEMPLATE_SETTING_NAME = 'eg.acq.picklist.upload.templates';
@@ -52,7 +52,7 @@ interface ImportOptions {
     match_quality_ratio: number;
     create_po?: boolean;
     activate_po?: boolean;
-    ordering_agency?: OrgFamily;
+    ordering_agency?: IdlObject;
     fiscal_year?: any;
     selectionLists?: any;
     exit_early: boolean;
@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
     startQueueId: number;
 
     activeQueueId: number;
-    orderingAgency: OrgFamily;
+    orderingAgency: IdlObject;
     selectedFiscalYear: number;
     selectedSelectionList: number;
     selectedBibSource: number;
