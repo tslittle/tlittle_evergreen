@@ -219,6 +219,10 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         return Promise.all(promises);
     }
 
+    orgOnChange(org: IdlObject) {
+        this.orderingAgency = org;
+    }
+
 
     loadTemplates() {
         this.store.getItem(TEMPLATE_SETTING_NAME).then(
