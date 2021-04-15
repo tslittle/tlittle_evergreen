@@ -79,7 +79,8 @@
     </div>
       <div class="col-lg-3">
         <eg-org-select
-        [initialOrg]="orderingAgency"
+        [initialOrgId]="1"
+        [applyOrgId]="orderingAgency"
         (onChange)="orgOnChange($event)">
         </eg-org-select>
       </div>
