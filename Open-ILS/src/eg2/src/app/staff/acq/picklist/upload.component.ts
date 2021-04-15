@@ -157,7 +157,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
     applyDefaults() {
         this.minQualityRatio = 0;
         this.selectedBibSource = 1; // default to system local
-        this.recordType = 'acq';
+        this.recordType = 'bib';
         this.formTemplates = {};
 //To-do add default for fiscal year
         if (this.vlagent.importSelection) {
@@ -203,7 +203,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const promises = [
             this.vlagent.getMergeProfiles(),
-            this.vlagent.getAllQueues('acq'),
+            this.vlagent.getAllQueues('bib'),
             this.vlagent.getMatchSets('bib'),
             this.vlagent.getBibSources(),
             this.vlagent.getFiscalYears(),

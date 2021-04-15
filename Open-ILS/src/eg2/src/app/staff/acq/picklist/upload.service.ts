@@ -204,8 +204,8 @@ export class PicklistUploadService {
         const method = `open-ils.vandelay.${recordType}_queue.create`;
 
         let qType = recordType;
-        if (recordType.match(/bib_acq/)) {
-            qType = 'acq';
+        if (recordType.match(/acq/)) {
+            qType = 'bib';
         }
 
         return new Promise((resolve, reject) => {
@@ -250,7 +250,7 @@ export class PicklistUploadService {
         const etype = queue.queue_type().match(/auth/) ? 'auth' : 'bib';
 
         let url =
-          `${VANDELAY_EXPORT_PATH}?type=${etype}&queueid=${queue.id()}`;
+          `${VANDELAY_EXPORT_PATH}?type=bib&queueid=${queue.id()}`;
 
         let saveName = queue.name();
 
