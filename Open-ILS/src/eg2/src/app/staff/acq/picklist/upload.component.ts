@@ -382,7 +382,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
             },
             err => Promise.reject('queue create failed')
         ).then(
-            ok => this.processSpool(),
+            ok => this.processUpload(),
             err => Promise.reject('process spool failed')
         ).then(
             ok => this.importRecords(),
@@ -479,7 +479,7 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
         )).toPromise();
     }
 
-    processSpool():  Promise<any> {
+    processUpload():  Promise<any> {
 
         if (this.vlagent.importSelection) {
             // Nothing to enqueue when processing pre-queued records
@@ -488,14 +488,21 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
         let spoolType = this.recordType;
         
+        const args = {
+            
+            provider: this.selectedProvider,
+            ordering_agency: this.orderingAgency,
+            create_po: this.createPurchaseOrder,
+            activate_po: this.activatePurchaseOrder,
+            fiscal_year: this.selectedFiscalYear
+        }
 
-        const method = `open-ils.vlagent.${spoolType}.process_spool`;
+        const method = `open-ils.acq.process_upload_records`;
 
         return new Promise((resolve, reject) => {
             this.net.request(
-                'open-ils.vlagent', method,
-                this.auth.token(), this.sessionKey, this.activeQueueId,
-                null, null, this.selectedBibSource,
+                'open-ils.acq', method,
+                this.auth.token(), this.sessionKey, args,
                 (this.sessionName || null), true
             ).subscribe(
                 tracker => {
