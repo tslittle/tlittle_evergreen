@@ -497,6 +497,8 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
             fiscal_year: this.selectedFiscalYear
         }
 
+        
+
         const method = `open-ils.acq.process_upload_records`;
 
         return new Promise((resolve, reject) => {
@@ -508,6 +510,8 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
                 tracker => {
                     const e = this.evt.parse(tracker);
                     if (e) { console.error(e); return reject(); }
+
+                    
 
                     // Spooling is in progress, track the results.
                     this.vlagent.pollSessionTracker(tracker.id())
@@ -546,19 +550,19 @@ export class UploadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     importRecordQueue(recIds?: number[]): Promise<any> {
-        const rtype = this.recordType === 'acq';
+        const rtype = this.recordType === 'bib';
 
-        let method = `open-ils.acq.process_upload_records`;
+        let method = `open-ils.acq.process_upload_records`
         const options: ImportOptions = this.compileImportOptions();
 
         let target: number | number[] = this.activeQueueId;
         if (recIds && recIds.length) {
-            method = `open-ils.vlagent.${rtype}_record.list.import`;
+            method = `open-ils.vandelay.${rtype}_record.list.import`;
             target = recIds;
         }
 
         return new Promise((resolve, reject) => {
-            this.net.request('open-ils.vlagent',
+            this.net.request('open-ils.vandelay',
                 method, this.auth.token(), target, options)
             .subscribe(
                 tracker => {
